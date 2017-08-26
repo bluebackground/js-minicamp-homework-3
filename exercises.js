@@ -60,9 +60,15 @@ function newUser(name, email, password) {
 function hasEmail(user) {
   // return true if the user has a value for the property 'email'
   // otherwise return false
-  if (user.email !== null && user.email !== undefined) {
-    return true;
+  if (user.email != null && typeof(user.email) != 'undefined') {
+    if (user.email.length > 0 && user.email.includes('@')) {
+      return true;
+    } else {
+      //console.log("Error: Email length is 0 or doesn't include '@'.");
+      return false;
+    }
   } else {
+    //console.log("Error: Email property may not be defined.");
     return false;
   }
 }
@@ -76,6 +82,7 @@ function hasProperty(object, property) {
       return true;
     }
   }
+  //console.log("Error: Object does not contain property key.");
   return false;
 }
 
@@ -84,8 +91,10 @@ function verifyPassword(user, password) {
   // return true if they match
   // otherwise return false
   if (user.password === password) {
+    //console.log("Match.");
     return true;
   } else {
+    //console.log("Error: Password does not match user password.");
     return false;
   }
 }
@@ -137,9 +146,11 @@ function addCalculateDiscountPriceMethod(storeItem) {
   // price -> 20
   // discountPercentage -> .2
   // discountPrice = 20 - (20 * .2)
-  storeItem.calculateDiscountPrice = function() {
-    return storeItem.price - (storeItem.price * storeItem.discountPercentage);
+
+  storeItem.calculateDiscountPrice = function calculateDiscountPrice() {
+      return (this.price - (this.price * this.discountPercentage));
   };
+  return storeItem;
 }
 
 // Do not modify code below this line.
